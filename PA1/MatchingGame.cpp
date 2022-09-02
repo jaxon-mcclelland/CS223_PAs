@@ -1,7 +1,6 @@
 #include "MatchingGame.hpp"
 
 MatchingGame::MatchingGame() {
-    this->command_List = new LinkedList<std::string>();
 
 }
 MatchingGame::~MatchingGame() {}
