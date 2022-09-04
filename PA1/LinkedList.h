@@ -1,4 +1,5 @@
-#include "Node.h"
+#include "Node.hpp"
+#include <stdlib.h>
 template <class T>
 class LinkedList {
     public:
@@ -6,8 +7,8 @@ class LinkedList {
         ~LinkedList();
         void insert_item(T item);
         void delete_item(T item);
-        T find_item(int idx);
-
+        T find_item(int idx) const;
+        T get_rand_item() const;
     private:
         Node<T>* pHead;
         int size_list;
@@ -57,7 +58,7 @@ void LinkedList<T>::delete_item(T item) {
 
 }
 template <class T>
-T LinkedList<T>::find_item(int idx) {
+T LinkedList<T>::find_item(int idx) const {
     if(idx >= this->size_list) {
         throw;
     }
@@ -66,4 +67,9 @@ T LinkedList<T>::find_item(int idx) {
         pNode = pNode->pNext;
     }
     return pNode->data;
+}
+template <class T>
+T LinkedList<T>::get_rand_item() const {
+    int idx = rand() % this->size_list;
+    return find_item(idx);
 }
