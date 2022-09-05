@@ -1,5 +1,5 @@
-CMakeFiles/PA1.dir/main.cpp.o: \
- /home/jaxon/Projects/WSU/CPTS_223/PA1/main.cpp \
+CMakeFiles/PA1.dir/src/MatchingGame.cpp.o: \
+ /home/jaxon/Projects/WSU/CPTS_223/PA1/src/MatchingGame.cpp \
  /usr/include/stdc-predef.h \
  /home/jaxon/Projects/WSU/CPTS_223/PA1/src/MatchingGame.hpp \
  /home/jaxon/Projects/WSU/CPTS_223/PA1/src/LinkedList.hpp \

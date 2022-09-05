@@ -6,5 +6,5 @@ CXX_DEFINES =
 
 CXX_INCLUDES = 
 
-CXX_FLAGS = -g -g -std=gnu++11
+CXX_FLAGS = -g -g -I src/ -std=gnu++11
 

@@ -22,18 +22,3 @@ std::string Node::getDescription() const {
     return this->description;
 }
 
-std::istream &operator>>(std::istream& lhs, Node* rhs) {
-    char command[100];
-    char answer[100];
-    lhs.getline(command, 100, ',');
-    lhs.getline(answer, 100, '\n');
-    
-    rhs->setCommand(command);
-    rhs->setDescription(answer);
-    
-    return lhs;
-
-}
-std::ostream &operator<<(std::ostream& lhs, Node* rhs) {
-    return lhs;
-}

@@ -83,17 +83,65 @@ CMakeFiles/PA1.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/PA1.dir/main.cpp.s"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jaxon/Projects/WSU/CPTS_223/PA1/main.cpp -o CMakeFiles/PA1.dir/main.cpp.s
 
+CMakeFiles/PA1.dir/src/MatchingGame.cpp.o: CMakeFiles/PA1.dir/flags.make
+CMakeFiles/PA1.dir/src/MatchingGame.cpp.o: ../src/MatchingGame.cpp
+CMakeFiles/PA1.dir/src/MatchingGame.cpp.o: CMakeFiles/PA1.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaxon/Projects/WSU/CPTS_223/PA1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/PA1.dir/src/MatchingGame.cpp.o"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PA1.dir/src/MatchingGame.cpp.o -MF CMakeFiles/PA1.dir/src/MatchingGame.cpp.o.d -o CMakeFiles/PA1.dir/src/MatchingGame.cpp.o -c /home/jaxon/Projects/WSU/CPTS_223/PA1/src/MatchingGame.cpp
+
+CMakeFiles/PA1.dir/src/MatchingGame.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/PA1.dir/src/MatchingGame.cpp.i"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jaxon/Projects/WSU/CPTS_223/PA1/src/MatchingGame.cpp > CMakeFiles/PA1.dir/src/MatchingGame.cpp.i
+
+CMakeFiles/PA1.dir/src/MatchingGame.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/PA1.dir/src/MatchingGame.cpp.s"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jaxon/Projects/WSU/CPTS_223/PA1/src/MatchingGame.cpp -o CMakeFiles/PA1.dir/src/MatchingGame.cpp.s
+
+CMakeFiles/PA1.dir/src/Node.cpp.o: CMakeFiles/PA1.dir/flags.make
+CMakeFiles/PA1.dir/src/Node.cpp.o: ../src/Node.cpp
+CMakeFiles/PA1.dir/src/Node.cpp.o: CMakeFiles/PA1.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaxon/Projects/WSU/CPTS_223/PA1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/PA1.dir/src/Node.cpp.o"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PA1.dir/src/Node.cpp.o -MF CMakeFiles/PA1.dir/src/Node.cpp.o.d -o CMakeFiles/PA1.dir/src/Node.cpp.o -c /home/jaxon/Projects/WSU/CPTS_223/PA1/src/Node.cpp
+
+CMakeFiles/PA1.dir/src/Node.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/PA1.dir/src/Node.cpp.i"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jaxon/Projects/WSU/CPTS_223/PA1/src/Node.cpp > CMakeFiles/PA1.dir/src/Node.cpp.i
+
+CMakeFiles/PA1.dir/src/Node.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/PA1.dir/src/Node.cpp.s"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jaxon/Projects/WSU/CPTS_223/PA1/src/Node.cpp -o CMakeFiles/PA1.dir/src/Node.cpp.s
+
+CMakeFiles/PA1.dir/src/Player.cpp.o: CMakeFiles/PA1.dir/flags.make
+CMakeFiles/PA1.dir/src/Player.cpp.o: ../src/Player.cpp
+CMakeFiles/PA1.dir/src/Player.cpp.o: CMakeFiles/PA1.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaxon/Projects/WSU/CPTS_223/PA1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/PA1.dir/src/Player.cpp.o"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PA1.dir/src/Player.cpp.o -MF CMakeFiles/PA1.dir/src/Player.cpp.o.d -o CMakeFiles/PA1.dir/src/Player.cpp.o -c /home/jaxon/Projects/WSU/CPTS_223/PA1/src/Player.cpp
+
+CMakeFiles/PA1.dir/src/Player.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/PA1.dir/src/Player.cpp.i"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jaxon/Projects/WSU/CPTS_223/PA1/src/Player.cpp > CMakeFiles/PA1.dir/src/Player.cpp.i
+
+CMakeFiles/PA1.dir/src/Player.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/PA1.dir/src/Player.cpp.s"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jaxon/Projects/WSU/CPTS_223/PA1/src/Player.cpp -o CMakeFiles/PA1.dir/src/Player.cpp.s
+
 # Object files for target PA1
 PA1_OBJECTS = \
-"CMakeFiles/PA1.dir/main.cpp.o"
+"CMakeFiles/PA1.dir/main.cpp.o" \
+"CMakeFiles/PA1.dir/src/MatchingGame.cpp.o" \
+"CMakeFiles/PA1.dir/src/Node.cpp.o" \
+"CMakeFiles/PA1.dir/src/Player.cpp.o"
 
 # External object files for target PA1
 PA1_EXTERNAL_OBJECTS =
 
 PA1: CMakeFiles/PA1.dir/main.cpp.o
+PA1: CMakeFiles/PA1.dir/src/MatchingGame.cpp.o
+PA1: CMakeFiles/PA1.dir/src/Node.cpp.o
+PA1: CMakeFiles/PA1.dir/src/Player.cpp.o
 PA1: CMakeFiles/PA1.dir/build.make
 PA1: CMakeFiles/PA1.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/jaxon/Projects/WSU/CPTS_223/PA1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable PA1"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/jaxon/Projects/WSU/CPTS_223/PA1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable PA1"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/PA1.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

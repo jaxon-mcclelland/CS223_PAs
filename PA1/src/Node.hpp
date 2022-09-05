@@ -1,7 +1,9 @@
 #include <iostream>
 #include <string>
 
+
 class Node {
+    template <class T, class J>
     friend class LinkedList;
     public:
         Node();
@@ -16,5 +18,3 @@ class Node {
         std::string description;
         Node* pNext;
 };
-std::istream &operator>>(std::istream& lhs, Node* rhs);
-std::ostream &operator<<(std::ostream& lhs, Node* rhs);

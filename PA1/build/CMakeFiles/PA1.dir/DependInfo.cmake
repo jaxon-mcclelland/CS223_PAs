@@ -9,6 +9,9 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/jaxon/Projects/WSU/CPTS_223/PA1/main.cpp" "CMakeFiles/PA1.dir/main.cpp.o" "gcc" "CMakeFiles/PA1.dir/main.cpp.o.d"
+  "/home/jaxon/Projects/WSU/CPTS_223/PA1/src/MatchingGame.cpp" "CMakeFiles/PA1.dir/src/MatchingGame.cpp.o" "gcc" "CMakeFiles/PA1.dir/src/MatchingGame.cpp.o.d"
+  "/home/jaxon/Projects/WSU/CPTS_223/PA1/src/Node.cpp" "CMakeFiles/PA1.dir/src/Node.cpp.o" "gcc" "CMakeFiles/PA1.dir/src/Node.cpp.o.d"
+  "/home/jaxon/Projects/WSU/CPTS_223/PA1/src/Player.cpp" "CMakeFiles/PA1.dir/src/Player.cpp.o" "gcc" "CMakeFiles/PA1.dir/src/Player.cpp.o.d"
   )
 
 # Targets to which this target links.

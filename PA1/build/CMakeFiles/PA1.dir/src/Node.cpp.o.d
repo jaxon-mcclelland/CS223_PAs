@@ -1,8 +1,6 @@
-CMakeFiles/PA1.dir/main.cpp.o: \
- /home/jaxon/Projects/WSU/CPTS_223/PA1/main.cpp \
+CMakeFiles/PA1.dir/src/Node.cpp.o: \
+ /home/jaxon/Projects/WSU/CPTS_223/PA1/src/Node.cpp \
  /usr/include/stdc-predef.h \
- /home/jaxon/Projects/WSU/CPTS_223/PA1/src/MatchingGame.hpp \
- /home/jaxon/Projects/WSU/CPTS_223/PA1/src/LinkedList.hpp \
  /home/jaxon/Projects/WSU/CPTS_223/PA1/src/Node.hpp \
  /usr/include/c++/12/iostream \
  /usr/include/c++/12/x86_64-redhat-linux/bits/c++config.h \
@@ -128,9 +126,4 @@ CMakeFiles/PA1.dir/main.cpp.o: \
  /usr/include/c++/12/bits/locale_facets.tcc \
  /usr/include/c++/12/bits/basic_ios.tcc \
  /usr/include/c++/12/bits/ostream.tcc /usr/include/c++/12/istream \
- /usr/include/c++/12/bits/istream.tcc \
- /home/jaxon/Projects/WSU/CPTS_223/PA1/src/Player.hpp \
- /usr/include/c++/12/fstream /usr/include/c++/12/bits/codecvt.h \
- /usr/include/c++/12/x86_64-redhat-linux/bits/basic_file.h \
- /usr/include/c++/12/x86_64-redhat-linux/bits/c++io.h \
- /usr/include/c++/12/bits/fstream.tcc
+ /usr/include/c++/12/bits/istream.tcc
