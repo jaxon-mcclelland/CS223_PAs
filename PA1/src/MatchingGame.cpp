@@ -16,6 +16,7 @@ MatchingGame::MatchingGame() {
                 break;
             case 2:
                 // start game
+                startGame();
                 break;
             case 3:
                 // load previous game
@@ -36,14 +37,30 @@ MatchingGame::MatchingGame() {
     } while(option < 1 || option > 6);
 }
 MatchingGame::~MatchingGame() {
-    
+
     if(this->command_file.is_open()) {
         this->command_file.close();
     }
     if(this->player_file.is_open()) {
         this->player_file.close();
     }
+    writeDataToFiles();
+    delete this->command_List;
+    delete[] this->player_arr;
+
+
+
+
+
 }
+
+void MatchingGame::startGame() {
+    loadCommands();
+    loadPlayers();
+    // need to ask player how many questions (5-30)
+    // fill a vector with questions
+}
+
 void MatchingGame::displayRules() const {
     std::cout << "The rules of the game are as follows:\n";
     std::cout << "\t 1) A user will be prompted with a command and 3 options for the command definition.\n";
@@ -63,7 +80,7 @@ void MatchingGame::loadCommands() {
     if(this->command_file.is_open()) {
         this->command_file.close();
     }
-    this->command_file.open("data/LinuxCommands.csv", std::ios::in);
+    this->command_file.open("data/commands.csv", std::ios::in);
     while(!this->command_file.eof()) {
             char command[100];
             char answer[100];
@@ -71,10 +88,27 @@ void MatchingGame::loadCommands() {
             this->command_file.getline(answer, 100, '\n');
             this->command_List->insertAtFront(command, answer);
     }
+    this->command_file.close();
 }
 void MatchingGame::loadPlayers() {
-
+    if(this->player_file.is_open()) {
+        this->player_file.close();
+    }
+    this->player_file.open("data/profiles.csv", std::ios::in);
+    if(this->num_players == 0) {
+        this->num_players = 10;
+    }
+    Player* player_arr = new Player[this->num_players];
+    int counter = 0;
+    while(!this->player_file.eof()) {
+        if(counter == this->num_players) {
+            copyPlayerArr();
+        }
+        this->player_file >> this->player_arr[counter++];
+    }
+    this->player_file.close();
 }
+
 void MatchingGame::addCommand() {
     std::string command;
     std::string description;
@@ -106,4 +140,17 @@ void MatchingGame::removeCommand() {
     }
     this->command_List->removeNode(command);
     std::cout << "Item successfully removed\n";
+}
+void MatchingGame::copyPlayerArr() {
+    Player* new_arr = new Player[num_players * 2];
+    for(int i = 0; i < this->num_players; ++i) {
+        new_arr[i] = this->player_arr[i];
+    }
+    Player* tmp = this->player_arr;
+    this->player_arr = new_arr;
+    delete[] tmp;
+    this->num_players *= 2;
+}
+void MatchingGame::writeDataToFiles() {
+    this->command_file.open("data/commands.csv", std::ios::out);
 }

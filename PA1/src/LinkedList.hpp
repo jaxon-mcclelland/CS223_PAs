@@ -1,4 +1,5 @@
 #include "Node.hpp"
+#include <stdlib.h>
 
 template <class T, class J>
 class LinkedList {
@@ -8,6 +9,7 @@ class LinkedList {
         void insertAtFront(T command, J description);
         void removeNode(T command);
         int findItem(T command);
+
     private:
         Node* pHead;
         int size_list;
@@ -67,4 +69,5 @@ int LinkedList<T,J>::findItem(T command) {
     } 
     pNode == nullptr ? counter = -1 : counter;
     return counter;
-} 
+}
+ 
