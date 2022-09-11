@@ -11,22 +11,22 @@
 			"cmake" : "/usr/bin/cmake",
 			"cpack" : "/usr/bin/cpack",
 			"ctest" : "/usr/bin/ctest",
-			"root" : "/usr/share/cmake"
+			"root" : "/usr/share/cmake-3.22"
 		},
 		"version" : 
 		{
 			"isDirty" : false,
 			"major" : 3,
 			"minor" : 22,
-			"patch" : 2,
-			"string" : "3.22.2",
+			"patch" : 1,
+			"string" : "3.22.1",
 			"suffix" : ""
 		}
 	},
 	"objects" : 
 	[
 		{
-			"jsonFile" : "codemodel-v2-750b6206ee15c7a208bc.json",
+			"jsonFile" : "codemodel-v2-e60510933961164259c8.json",
 			"kind" : "codemodel",
 			"version" : 
 			{
@@ -35,7 +35,7 @@
 			}
 		},
 		{
-			"jsonFile" : "cache-v2-92793c8cccb1f119e364.json",
+			"jsonFile" : "cache-v2-38493c8534eb31dd9ac0.json",
 			"kind" : "cache",
 			"version" : 
 			{
@@ -44,7 +44,7 @@
 			}
 		},
 		{
-			"jsonFile" : "cmakeFiles-v1-af6f257290d0fdd264b2.json",
+			"jsonFile" : "cmakeFiles-v1-486ec5ed99743b113859.json",
 			"kind" : "cmakeFiles",
 			"version" : 
 			{
@@ -53,7 +53,7 @@
 			}
 		},
 		{
-			"jsonFile" : "toolchains-v1-624cb7d4968bdc35fb2e.json",
+			"jsonFile" : "toolchains-v1-f8eaf7f9e5670d5d73ca.json",
 			"kind" : "toolchains",
 			"version" : 
 			{
@@ -90,7 +90,7 @@
 				"responses" : 
 				[
 					{
-						"jsonFile" : "cache-v2-92793c8cccb1f119e364.json",
+						"jsonFile" : "cache-v2-38493c8534eb31dd9ac0.json",
 						"kind" : "cache",
 						"version" : 
 						{
@@ -99,7 +99,7 @@
 						}
 					},
 					{
-						"jsonFile" : "codemodel-v2-750b6206ee15c7a208bc.json",
+						"jsonFile" : "codemodel-v2-e60510933961164259c8.json",
 						"kind" : "codemodel",
 						"version" : 
 						{
@@ -108,7 +108,7 @@
 						}
 					},
 					{
-						"jsonFile" : "toolchains-v1-624cb7d4968bdc35fb2e.json",
+						"jsonFile" : "toolchains-v1-f8eaf7f9e5670d5d73ca.json",
 						"kind" : "toolchains",
 						"version" : 
 						{
@@ -117,7 +117,7 @@
 						}
 					},
 					{
-						"jsonFile" : "cmakeFiles-v1-af6f257290d0fdd264b2.json",
+						"jsonFile" : "cmakeFiles-v1-486ec5ed99743b113859.json",
 						"kind" : "cmakeFiles",
 						"version" : 
 						{

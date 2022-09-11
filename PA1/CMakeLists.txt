@@ -10,8 +10,10 @@ add_executable(PA1 main.cpp
     src/MatchingGame.cpp 
     src/Node.cpp 
     src/Player.cpp
+    src/Question.cpp
     src/MatchingGame.hpp 
     src/Node.hpp 
     src/Player.hpp
     src/LinkedList.hpp
+    src/Question.hpp
 )

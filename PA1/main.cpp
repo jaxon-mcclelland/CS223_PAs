@@ -22,6 +22,7 @@ Disadvantages
     - Fixed size but the number of players is not nessecarily known at runtime, meaning that the array could need to expand constantly. This could be avoided by using a list
 */
 int main(void) {
+    srand(time(NULL));
     MatchingGame game;
     return 0;
 }

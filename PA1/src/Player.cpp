@@ -12,6 +12,15 @@ Player::Player(std::string name) {
 Player::~Player() {
 
 }
+
+Player& Player::operator=(const Player& rhs) {
+    if(this == &rhs) {
+        return *this;
+    }
+    name = rhs.getName();
+    score = rhs.getScore();
+    return *this;
+}
 std::string Player::getName() const {
     return this->name;
 }

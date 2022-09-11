@@ -7,6 +7,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/PA1.dir/src/Node.cpp.o.d"
   "CMakeFiles/PA1.dir/src/Player.cpp.o"
   "CMakeFiles/PA1.dir/src/Player.cpp.o.d"
+  "CMakeFiles/PA1.dir/src/Question.cpp.o"
+  "CMakeFiles/PA1.dir/src/Question.cpp.o.d"
   "PA1"
   "PA1.pdb"
 )

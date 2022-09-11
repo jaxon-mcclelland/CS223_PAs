@@ -9,11 +9,13 @@ class LinkedList {
         void insertAtFront(T command, J description);
         void removeNode(T command);
         int findItem(T command);
-
+        J getRandomDescription();
+        int getListSize() const;
+        std::ostream& writeListToFile(std::ostream& outfile);
+    
     private:
         Node* pHead;
         int size_list;
-
 };
 
 template <class T, class J>
@@ -70,4 +72,25 @@ int LinkedList<T,J>::findItem(T command) {
     pNode == nullptr ? counter = -1 : counter;
     return counter;
 }
- 
+
+template <class T, class J>
+int LinkedList<T,J>::getListSize() const {
+    return this->size_list;
+}
+template <class T, class J>
+std::ostream& LinkedList<T,J>::writeListToFile(std::ostream& outfile) {
+    Node* pNode = this->pHead;
+    for(int i = 0; i < this->size_list; ++i) {
+        outfile << pNode->command << "," << pNode->description << "\n";
+    }
+    return outfile;
+}
+template <class T, class J>
+J LinkedList<T, J>::getRandomDescription() {
+    int rand_idx = rand() % this->size_list;
+    Node* pNode = this->pHead;
+    for(int i = 0; i <= rand_idx; ++i) {
+        pNode = pNode->pNext;
+    }
+    return pNode->description;
+}

@@ -67,8 +67,8 @@ CMAKE_BINARY_DIR = /home/jaxon/Projects/WSU/CPTS_223/PA1/build
 
 # Special rule for the target edit_cache
 edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
-	/usr/bin/ccmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -225,6 +225,30 @@ src/Player.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/PA1.dir/build.make CMakeFiles/PA1.dir/src/Player.cpp.s
 .PHONY : src/Player.cpp.s
 
+src/Question.o: src/Question.cpp.o
+.PHONY : src/Question.o
+
+# target to build an object file
+src/Question.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PA1.dir/build.make CMakeFiles/PA1.dir/src/Question.cpp.o
+.PHONY : src/Question.cpp.o
+
+src/Question.i: src/Question.cpp.i
+.PHONY : src/Question.i
+
+# target to preprocess a source file
+src/Question.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PA1.dir/build.make CMakeFiles/PA1.dir/src/Question.cpp.i
+.PHONY : src/Question.cpp.i
+
+src/Question.s: src/Question.cpp.s
+.PHONY : src/Question.s
+
+# target to generate assembly for a file
+src/Question.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PA1.dir/build.make CMakeFiles/PA1.dir/src/Question.cpp.s
+.PHONY : src/Question.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -246,6 +270,9 @@ help:
 	@echo "... src/Player.o"
 	@echo "... src/Player.i"
 	@echo "... src/Player.s"
+	@echo "... src/Question.o"
+	@echo "... src/Question.i"
+	@echo "... src/Question.s"
 .PHONY : help
 
 

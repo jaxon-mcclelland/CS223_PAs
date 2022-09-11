@@ -18,5 +18,10 @@
   "directory": "/home/jaxon/Projects/WSU/CPTS_223/PA1/build",
   "command": "/usr/bin/g++   -g -g -I src/ -std=gnu++11 -o CMakeFiles/PA1.dir/src/Player.cpp.o -c /home/jaxon/Projects/WSU/CPTS_223/PA1/src/Player.cpp",
   "file": "/home/jaxon/Projects/WSU/CPTS_223/PA1/src/Player.cpp"
+},
+{
+  "directory": "/home/jaxon/Projects/WSU/CPTS_223/PA1/build",
+  "command": "/usr/bin/g++   -g -g -I src/ -std=gnu++11 -o CMakeFiles/PA1.dir/src/Question.cpp.o -c /home/jaxon/Projects/WSU/CPTS_223/PA1/src/Question.cpp",
+  "file": "/home/jaxon/Projects/WSU/CPTS_223/PA1/src/Question.cpp"
 }
 ]

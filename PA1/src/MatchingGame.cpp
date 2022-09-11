@@ -15,11 +15,10 @@ MatchingGame::MatchingGame() {
                 option = 7;
                 break;
             case 2:
-                // start game
                 startGame();
                 break;
             case 3:
-                // load previous game
+                loadPreviousGame();
                 break;
             case 4:
                 this->addCommand();
@@ -28,7 +27,6 @@ MatchingGame::MatchingGame() {
             case 5:
                 this->removeCommand();
                 option = 7;
-                // remove command
                 break;
             case 6:
                 break;
@@ -57,8 +55,14 @@ MatchingGame::~MatchingGame() {
 void MatchingGame::startGame() {
     loadCommands();
     loadPlayers();
-    // need to ask player how many questions (5-30)
-    // fill a vector with questions
+    
+    std::cout << "How many questions would you like to be asked?";
+    std::cin >> this->num_questions;
+    std::cout << "\n";
+    generateQuestionList();
+    for(int i = 0; i < this->num_questions; ++i) {
+        // display question and evaluate answer
+    }
 }
 
 void MatchingGame::displayRules() const {
@@ -75,6 +79,25 @@ void MatchingGame::displayMenu() const {
     std::cout << "\t4.  Add Command\n";
     std::cout << "\t5.  Remove Command\n"; 
     std::cout << "\t6.  Exit\n";
+}
+void MatchingGame::displayQuestion(Question& input) const {
+    int choice = rand() % 3;
+    if(choice == 0) {
+        input.correct_number = 1;
+        std::cout << "1) " << input.correct_answer << "\n";
+        std::cout << "2) " << input.wrong_answer1 << "\n";
+        std::cout << "3) " << input.wrong_answer2 << "\n";
+    } else if(choice == 1) {
+        input.correct_number = 2;
+        std::cout << "1) " << input.wrong_answer1 << "\n";
+        std::cout << "2) " << input.correct_answer << "\n";
+        std::cout << "3) " << input.wrong_answer2 << "\n";
+    } else {
+        input.correct_number = 3;
+        std::cout << "1) " << input.wrong_answer1 << "\n";
+        std::cout << "2) " << input.wrong_answer2 << "\n";
+        std::cout << "3) " << input.correct_answer << "\n";
+    }
 }
 void MatchingGame::loadCommands() {
     if(this->command_file.is_open()) {
@@ -153,4 +176,34 @@ void MatchingGame::copyPlayerArr() {
 }
 void MatchingGame::writeDataToFiles() {
     this->command_file.open("data/commands.csv", std::ios::out);
+    this->command_List->writeListToFile(this->command_file);
+    this->command_file.close();
+    this->player_file.open("data/profiles.csv", std::ios::out);
+    for(int i = 0; i < this->num_players; ++i) {
+        this->player_file << player_arr[i].getName() << "," << player_arr[i].getScore() << "\n";
+    }
+    this->player_file.close();
+}
+void MatchingGame::loadPreviousGame() {
+    std::string playerName;
+    std::cout << "What is the player name to load: ";
+    std::cin >> playerName;
+    std::cout << "\n";
+
+    for(int i = 0; i < this->num_players; ++i) {
+        if(player_arr[i].getName() == playerName) {
+            this->currentPlayerName = playerName;
+            this->currentPlayerScore = player_arr[i].getScore();
+            std::cout << "Found score of " << this->currentPlayerScore << "\n";
+            startGame();
+            return;
+        }
+    }
+    std::cout << "Player not found\n";
+
+}
+void MatchingGame::generateQuestionList() {
+    while(this->question_list.size() < this->num_questions) {
+        int idx = rand() % this->command_List->getListSize();
+    }
 }
