@@ -30,6 +30,8 @@ class MatchingGame {
         LinkedList<std::string, std::string>* command_List;        
         Player* player_arr;
         int num_players;
+        int current_player_arr_size;
+        int currPlayerIdx;
         std::string currentPlayerName;
         int currentPlayerScore;
         int num_questions;
