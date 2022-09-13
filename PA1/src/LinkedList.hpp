@@ -1,5 +1,6 @@
 #include "Node.hpp"
 #include <stdlib.h>
+#pragma once
 
 template <class T, class J>
 class LinkedList {
@@ -7,9 +8,10 @@ class LinkedList {
         LinkedList();
         ~LinkedList();
         void insertAtFront(T command, J description);
+        void getNode(int idx, T& command, J& description) const;
         void removeNode(T command);
         int findItem(T command);
-        J getRandomDescription();
+        J getRandomDescription(int idx);
         int getListSize() const;
         std::ostream& writeListToFile(std::ostream& outfile);
     
@@ -38,6 +40,7 @@ void LinkedList<T, J>::insertAtFront(T command, J description) {
     Node* pNode = new Node(command, description);
     pNode->pNext = this->pHead;
     this->pHead = pNode;
+    this->size_list++;
 }
 template <class T, class J>
 void LinkedList<T,J>::removeNode(T command) {
@@ -56,7 +59,19 @@ void LinkedList<T,J>::removeNode(T command) {
         }
         delete pNode;
     }
-
+    this->size_list--;
+}
+template <class T, class J>
+void LinkedList<T,J>::getNode(int idx, T& command, J& description) const {
+    if(idx > this->size_list) {
+        return;
+    }
+    Node* pNode = this->pHead;
+    for(int i = 0; i < idx; ++i) {
+        pNode = pNode->pNext;
+    }
+    command = pNode->command;
+    description = pNode->description;
 }
 template <class T, class J>
 int LinkedList<T,J>::findItem(T command) {
@@ -82,12 +97,16 @@ std::ostream& LinkedList<T,J>::writeListToFile(std::ostream& outfile) {
     Node* pNode = this->pHead;
     for(int i = 0; i < this->size_list; ++i) {
         outfile << pNode->command << "," << pNode->description << "\n";
+        pNode = pNode->pNext;
     }
     return outfile;
 }
 template <class T, class J>
-J LinkedList<T, J>::getRandomDescription() {
-    int rand_idx = rand() % this->size_list;
+J LinkedList<T, J>::getRandomDescription(int idx) {
+    int rand_idx;
+    do {
+        rand_idx = rand() % this->size_list;
+    } while(idx == rand_idx);
     Node* pNode = this->pHead;
     for(int i = 0; i <= rand_idx; ++i) {
         pNode = pNode->pNext;

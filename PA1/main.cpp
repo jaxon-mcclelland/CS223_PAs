@@ -2,7 +2,11 @@
 
 // Need ability to get a random command which hasn't been used before and return command description
 // Then need to get two descriptions which do not match the command above
-
+// testing:
+// test set with duplicate values
+// test player and command insert and remove
+// make sure files are read and written correctly
+// play game with max # of questions
 
 
 /*
