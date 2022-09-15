@@ -6,6 +6,7 @@
 #include <fstream>
 #include <string>
 #include <set>
+#include <vector>
 
 
 class MatchingGame {
@@ -28,9 +29,10 @@ class MatchingGame {
         std::fstream command_file;
         std::fstream player_file;
         LinkedList<std::string, std::string>* command_List;        
-        Player* player_arr;
         int num_players;
         int current_player_arr_size;
+        std::vector<Player*> player_arr;
+        //Player* player_arr;
         int currPlayerIdx;
         std::string currentPlayerName;
         int currentPlayerScore;
