@@ -45,6 +45,7 @@ std::istream& operator>>(std::istream& lhs, Player& rhs) {
     int score = atoi(buffer);
     rhs.changeName(name);
     rhs.changeScore(score);
+    
     return lhs;
 
 }

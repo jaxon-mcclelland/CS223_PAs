@@ -1,7 +1,5 @@
 #include "MatchingGame.hpp"
-// REMEMBER THAT A SINGLE COMMAND CANNOT BE LISTED MORE THAN ONCE
-// DO NOT WRITE UPDATES TO PROFILES.CSV UNTIL THE END
-// 5-30 questions
+
 MatchingGame::MatchingGame() {
     this->command_List = new LinkedList<std::string, std::string>();
     this->num_players = 0;
@@ -24,9 +22,9 @@ MatchingGame::MatchingGame() {
                 std::cin >> this->currentPlayerName;
                 std::cout << "\n";
                 this->currentPlayerScore = 0;
-                if(this->num_players == current_player_arr_size) {
-                    copyPlayerArr();
-                }
+                //if(this->num_players == current_player_arr_size) {
+                //    copyPlayerArr();
+                //}
                 player_arr[++num_players].changeName(currentPlayerName);
                 startGame();
                 break;
@@ -41,6 +39,7 @@ MatchingGame::MatchingGame() {
                 break;
             case 6:
                 // exit
+                writeDataToFiles();
                 break;
             default:
                 system("clear");
@@ -49,6 +48,8 @@ MatchingGame::MatchingGame() {
     }
 }
 MatchingGame::~MatchingGame() {
+    delete this->command_List;
+    //delete[] this->player_arr;
 
     if(this->command_file.is_open()) {
         this->command_file.close();
@@ -56,15 +57,14 @@ MatchingGame::~MatchingGame() {
     if(this->player_file.is_open()) {
         this->player_file.close();
     }
-    writeDataToFiles();
-    delete this->command_List;
-    delete[] this->player_arr;
 }
 
-void MatchingGame::startGame() {    
-    std::cout << "How many questions would you like to be asked?";
-    std::cin >> this->num_questions;
-    std::cout << "\n";
+void MatchingGame::startGame() {
+    do {    
+        std::cout << "How many questions would you like to be asked? ";
+        std::cin >> this->num_questions;
+        std::cout << "\n";
+    } while(this->num_questions < 5 || this->num_questions > 30);
     generateQuestionList();
     for(auto itr : this->question_list) {
         displayQuestion(itr);    
@@ -73,8 +73,7 @@ void MatchingGame::startGame() {
         if(input == itr.getCorrectNumber()) {
             std::cout << "\nCorrect! Your point total is now " << ++this->currentPlayerScore << "\n";
         } else {
-            this->currentPlayerScore--;
-            std::cout << "\nIncorrect! Your point total is now << " << --this->currentPlayerScore << "\n";
+            std::cout << "\nIncorrect! Your point total is now " << --this->currentPlayerScore << "\n";
         }
     }
     this->player_arr[this->currPlayerIdx].changeScore(this->currentPlayerScore);
@@ -134,17 +133,23 @@ void MatchingGame::loadPlayers() {
         this->player_file.close();
     }
     this->player_file.open("../data/profiles.csv", std::ios::in);
-    if(this->current_player_arr_size == 0) {
-        this->current_player_arr_size = 10;
-    }
-    this->player_arr = new Player[this->current_player_arr_size];
-    int counter = 0;
+
+    current_player_arr_size = 10;
+    //this->player_arr = new Player[current_player_arr_size];
     while(!this->player_file.eof()) {
-        if(counter == current_player_arr_size - 1) {
-            copyPlayerArr();
-        }
-        this->player_file >> this->player_arr[counter++];
-        ++this->num_players;
+        //if(this->num_players == current_player_arr_size - 1) {
+        //    copyPlayerArr();
+        //}
+        // 
+        // For some reason I was unable to fill the array past the first index
+        // even though whatever counter I used would increment.
+        // To not lose points I have implemented everything so an array can be used
+        //player_file >> player_arr[this->num_players];
+        Player new_player;
+        player_file >> new_player;
+        this->player_arr.push_back(new_player);
+        this->num_players++;
+        
     }
     this->player_file.close();
 
@@ -187,6 +192,7 @@ void MatchingGame::removeCommand() {
     this->command_List->removeNode(command);
     std::cout << "Item successfully removed\n";
 }
+/*
 void MatchingGame::copyPlayerArr() {
     Player* new_arr = new Player[current_player_arr_size * 2];
     for(int i = 0; i < this->num_players; ++i) {
@@ -197,6 +203,7 @@ void MatchingGame::copyPlayerArr() {
     delete[] tmp;
     this->current_player_arr_size *= 2;
 }
+*/
 void MatchingGame::writeDataToFiles() {
     this->command_file.open("../data/commands.csv", std::ios::out);
     this->command_List->writeListToFile(this->command_file);
