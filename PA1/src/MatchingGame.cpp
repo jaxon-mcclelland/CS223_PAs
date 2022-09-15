@@ -25,7 +25,9 @@ MatchingGame::MatchingGame() {
                 //if(this->num_players == current_player_arr_size) {
                 //    copyPlayerArr();
                 //}
-                player_arr[++num_players].changeName(currentPlayerName);
+                //player_arr[++num_players].changeName(currentPlayerName);
+                this->currPlayerIdx = this->num_players++;
+                this->player_arr.push_back(new Player(this->currentPlayerName));
                 startGame();
                 break;
             case 3:
@@ -57,26 +59,32 @@ MatchingGame::~MatchingGame() {
     if(this->player_file.is_open()) {
         this->player_file.close();
     }
+
+    for(auto itr:this->player_arr) {
+        delete itr;
+    }
 }
 
 void MatchingGame::startGame() {
     do {    
-        std::cout << "How many questions would you like to be asked? ";
+        std::cout << "How many questions would you like to be asked? (5-30) ";
         std::cin >> this->num_questions;
         std::cout << "\n";
     } while(this->num_questions < 5 || this->num_questions > 30);
     generateQuestionList();
+    int gameScore = 0;
     for(auto itr : this->question_list) {
         displayQuestion(itr);    
         int input;
         std::cin >> input;
         if(input == itr.getCorrectNumber()) {
-            std::cout << "\nCorrect! Your point total is now " << ++this->currentPlayerScore << "\n";
+            std::cout << "\nCorrect! Your game total is now " << ++gameScore<< "\n";
         } else {
-            std::cout << "\nIncorrect! Your point total is now " << --this->currentPlayerScore << "\n";
+            std::cout << "\nIncorrect! Your game total is now " << --gameScore << "\n";
         }
     }
-    this->player_arr[this->currPlayerIdx].changeScore(this->currentPlayerScore);
+    this->player_arr[this->currPlayerIdx]->changeScore(gameScore);
+    std::cout << "Your total score is now " << this->player_arr[this->currPlayerIdx]->getScore() << "\n";
 }
 
 void MatchingGame::displayRules() const {
@@ -126,6 +134,11 @@ void MatchingGame::loadCommands() {
             this->command_file.getline(answer, 100, '\n');
             this->command_List->insertAtFront(command, answer);
     }
+    // head will be EOF, so it should be deleted
+    if(this->command_List->getTop().length() == 0) {
+        this->command_List->pop();
+    }
+    
     this->command_file.close();
 }
 void MatchingGame::loadPlayers() {
@@ -144,12 +157,17 @@ void MatchingGame::loadPlayers() {
         // For some reason I was unable to fill the array past the first index
         // even though whatever counter I used would increment.
         // To not lose points I have implemented everything so an array can be used
+        // Additionally, since the Player data structure can expand at runtime, I would argue that a vector
+        // is the best way to implement this, since a vector is just a dynamic array
         //player_file >> player_arr[this->num_players];
-        Player new_player;
-        player_file >> new_player;
+        Player* new_player = new Player();
+        player_file >> *new_player;
         this->player_arr.push_back(new_player);
         this->num_players++;
-        
+    }
+    if(this->player_arr.back()->getName().length() == 0) {
+        player_arr.pop_back();
+        this->num_players--;
     }
     this->player_file.close();
 
@@ -209,8 +227,8 @@ void MatchingGame::writeDataToFiles() {
     this->command_List->writeListToFile(this->command_file);
     this->command_file.close();
     this->player_file.open("../data/profiles.csv", std::ios::out);
-    for(int i = 0; i < this->num_players; ++i) {
-        this->player_file << player_arr[i].getName() << "," << player_arr[i].getScore() << "\n";
+    for(auto itr:this->player_arr) {
+        this->player_file << itr->getName() << "," << itr->getScore() << "\n";
     }
     this->player_file.close();
 }
@@ -221,9 +239,9 @@ void MatchingGame::loadPreviousGame() {
     std::cout << "\n";
 
     for(int i = 0; i < this->num_players; ++i) {
-        if(player_arr[i].getName() == playerName) {
+        if(player_arr[i]->getName() == playerName) {
             this->currentPlayerName = playerName;
-            this->currentPlayerScore = player_arr[i].getScore();
+            this->currentPlayerScore = player_arr[i]->getScore();
             this->currPlayerIdx = i;
             std::cout << "Found score of " << this->currentPlayerScore << "\n";
             startGame();

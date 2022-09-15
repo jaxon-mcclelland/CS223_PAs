@@ -13,8 +13,9 @@ class LinkedList {
         int findItem(T command);
         J getRandomDescription(int idx);
         int getListSize() const;
+        void pop();
+        T getTop() const;
         std::ostream& writeListToFile(std::ostream& outfile);
-    
     private:
         Node* pHead;
         int size_list;
@@ -108,8 +109,23 @@ J LinkedList<T, J>::getRandomDescription(int idx) {
         rand_idx = rand() % this->size_list;
     } while(idx == rand_idx);
     Node* pNode = this->pHead;
-    for(int i = 0; i <= rand_idx; ++i) {
+    for(int i = 0; i < rand_idx; ++i) {
         pNode = pNode->pNext;
     }
     return pNode->description;
+}
+template <class T, class J>
+void LinkedList<T,J>::pop() {
+    if(this->size_list == 0 || this->size_list == 1) {
+        return;
+    }
+    Node* new_head = this->pHead->pNext;
+    Node* pTemp = this->pHead;
+    this->pHead = new_head;
+    delete pTemp;
+    this->size_list--;
+}
+template <class T, class J>
+T LinkedList<T,J>::getTop() const {
+    return this->pHead->command;
 }

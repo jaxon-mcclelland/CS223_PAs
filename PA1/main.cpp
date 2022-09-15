@@ -27,9 +27,8 @@ Disadvantages
 */
 
 
-// bug smash
-
-// not writing new users to profiles correctly
+// test add and remove command
+// make sure players are written and loaded correctly
 int main(void) {
     srand(time(NULL));
     MatchingGame game;

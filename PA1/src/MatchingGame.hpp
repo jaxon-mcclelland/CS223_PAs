@@ -31,7 +31,7 @@ class MatchingGame {
         LinkedList<std::string, std::string>* command_List;        
         int num_players;
         int current_player_arr_size;
-        std::vector<Player> player_arr;
+        std::vector<Player*> player_arr;
         //Player* player_arr;
         int currPlayerIdx;
         std::string currentPlayerName;

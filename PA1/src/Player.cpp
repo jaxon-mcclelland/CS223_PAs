@@ -31,7 +31,7 @@ void Player::changeName(std::string new_name) {
     this->name = new_name;
 }
 void Player::changeScore(int new_score) {
-    this->score = new_score;
+    this->score += new_score;
 }
 std::ostream& operator<<(std::ostream& lhs, const Player& rhs) {
     lhs << rhs.getName() << "," << rhs.getScore() << "\n";
