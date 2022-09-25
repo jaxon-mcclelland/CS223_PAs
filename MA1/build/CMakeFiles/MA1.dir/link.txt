@@ -1,0 +1,1 @@
+/usr/bin/g++  -Wall -g -rdynamic CMakeFiles/MA1.dir/main.cpp.o CMakeFiles/MA1.dir/queue.cpp.o CMakeFiles/MA1.dir/testQueue.cpp.o -o MA1 
