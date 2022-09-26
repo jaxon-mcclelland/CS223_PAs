@@ -1,3 +1,0 @@
-/home/jaxon/Projects/WSU/CPTS_223/MA1/build/CMakeFiles/MA1.dir
-/home/jaxon/Projects/WSU/CPTS_223/MA1/build/CMakeFiles/edit_cache.dir
-/home/jaxon/Projects/WSU/CPTS_223/MA1/build/CMakeFiles/rebuild_cache.dir

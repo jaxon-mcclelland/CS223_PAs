@@ -58,7 +58,7 @@ int queue::peek()
         cout << "UnderFlow\nProgram Terminated\n";
         return numeric_limits<int>::min();
     }
-    return arr[rear];
+    return arr[front];
 }
 
 // Utility function to return the size of the queue

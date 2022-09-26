@@ -5,6 +5,17 @@
 #include "testQueue.h"
 
 // main function
+
+
+/*
+BAD DESIGN CHOICES:
+
+    1) including the entire standard namespace is generally a bad idea
+    2) the queue destructor should call delete[] instead of delete because it is destroying an array, not just a pointer
+    3) There are several places where the program seems to intend for an exception to be raised, such as overflowing the queue - but this doesnt happen
+        instead a message is just printed out. An exception should be raised instead which the programming using this data structure can handle
+*/
+
 int main()
 {
     // call your test functions here!
