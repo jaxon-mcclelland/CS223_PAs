@@ -46,7 +46,7 @@ void queue::enqueue(int item)
     cout << "Inserting " << item << '\n';
 
     rear = (rear + 1) % capacity;
-    arr[rear] = size();
+    arr[rear] = item;
     count++;
 }
 
