@@ -3,7 +3,9 @@
 
 #include <iostream>
 #include <limits>
-using namespace std;
+#include <queue>
+//using namespace std;
+// ^^ this is bad practice
 
 
 /*
@@ -63,7 +65,7 @@ protected:
 	void printInOrderHelper(Node<T>* root) {
 		if (!root) return;
 		printInOrderHelper(root->left);
-		cout << root->value << ' ';
+		std::cout << root->value << ' ';
 		printInOrderHelper(root->right);
 	}
 
@@ -83,7 +85,7 @@ protected:
 			return -1;
 		}
 		else {
-			return 1 + max(heightHelper(root->left), heightHelper(root->right));
+			return 1 + std::max(heightHelper(root->left), heightHelper(root->right));
 		}
 	}
 
@@ -133,7 +135,7 @@ public:
 	 * TODO: Implement Destructor
 	 */
 	~BST() {
-	    cout << "TODO: Implement Destructor" << endl;
+	    std::cout << "TODO: Implement Destructor" << std::endl;
 	}
 
 	/* Public API */
@@ -155,7 +157,26 @@ public:
 	 * TODO: Implement printLevelOrder
 	 */
 	void printLevelOrder() {
-		cout << "TODO: Implement printLevelOrder" << endl;
+		if(this->_root == nullptr) {
+			return;
+		}
+		std::queue<Node<T>*> treeQ;
+		treeQ.push(_root);
+		while(!treeQ.empty()) {
+			int sizeQ = treeQ.size();
+			for(int i = 0; i < sizeQ; ++i) {
+				Node<T>* front = treeQ.front();
+				treeQ.pop();
+				std::cout << front->value << " ";
+				if(front->left != nullptr) {
+					treeQ.push(front->left);
+				}
+				if(front->right != nullptr) {
+					treeQ.push(front->right);
+				}
+			}
+			std::cout << "\n";
+		}
 	}
 
 	int nodesCount() {
@@ -171,7 +192,7 @@ public:
 	 * TODO: Implement printMaxPath
 	 */
 	void printMaxPath() {
-		cout << "TODO: Implement printMaxPath" << endl;
+		std::cout << "TODO: Implement printMaxPath" << std::endl;
 	}
 
 	bool deleteValue(T value) {
@@ -183,8 +204,8 @@ public:
 	 * TODO: Implement contains
 	 */
 	bool contains(T value) {
-	    cout << "TODO: Implement contains" << endl;
-		return numeric_limits<T>::min();
+	    std::cout << "TODO: Implement contains" << std::endl;
+		return std::numeric_limits<T>::min();
 	}
 };
 
