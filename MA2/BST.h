@@ -4,6 +4,8 @@
 #include <iostream>
 #include <limits>
 #include <queue>
+#include <vector>
+#include <stack>
 //using namespace std;
 // ^^ this is bad practice
 
@@ -123,8 +125,66 @@ protected:
 		}
 		return deleteValueHelper(current, current->left, value) ||
 			deleteValueHelper(current, current->right, value);
+		
+	}
+	// deletes the left and right subtrees of a root tree
+	void deleteSubTree(Node<T>* root) {
+		if(root->left != nullptr) {
+			deleteSubTree(root->left);
+			delete root->left;
+		}
+		if(root->right != nullptr) {
+			deleteSubTree(root->right);
+			delete root->right;
+		}
 	}
 
+	bool containsHelper(const Node<T>* root, const T val) const {
+		if(root == nullptr) {
+			return false;
+		}
+		if(val < root->value) {
+			return containsHelper(root->left, val);
+		}
+		else if(val > root->value) {
+			return containsHelper(root->right, val);
+		}
+		else {
+			return true;
+		}
+	}
+	size_t getLengthMaxPath(const Node<T>* root) const {
+		if(root == nullptr) {
+			return 0;
+		}
+		return 1 + std::max(getLengthMaxPath(root->left), getLengthMaxPath(root->right));
+	}
+	/*
+		Gets the max path as a vector of pointers
+		
+		Note: Since this is a private method, it is ok to return a vector of pointers.
+		If this were a tree of large structs, it would also be more memory efficient to work
+		with pointers rather than the node values themselves. I am also enforcing immutability
+		for the pointers returned by this method but that is a choice that would depend on the needs
+		for this method.
+	*/
+	std::vector<const Node<T>*> getMaxPath(const Node<T>* root) const {
+		if(root == nullptr) {
+			return {};
+		}
+		
+		std::vector<const Node<T>*> leftPath = getMaxPath(root->left);
+		std::vector<const Node<T>*> rightPath = getMaxPath(root->right);
+
+		if(leftPath.size() < rightPath.size()) {
+			rightPath.push_back(root);
+			return rightPath;
+		} else {
+			leftPath.push_back(root);
+			return leftPath;
+		}
+	}
+  
 	/********************************* PUBLIC API *****************************/
 public:
 
@@ -132,10 +192,12 @@ public:
 
 	/**
 	 * Destructor - Needs to free *all* nodes in the tree
-	 * TODO: Implement Destructor
 	 */
 	~BST() {
-	    std::cout << "TODO: Implement Destructor" << std::endl;
+		if(_root != nullptr) {
+			deleteSubTree(_root);
+			delete _root;
+		}
 	}
 
 	/* Public API */
@@ -154,9 +216,8 @@ public:
 
 	/**
 	 * Print the nodes level by level, starting from the root
-	 * TODO: Implement printLevelOrder
 	 */
-	void printLevelOrder() {
+	void printLevelOrder() const {
 		if(this->_root == nullptr) {
 			return;
 		}
@@ -191,8 +252,21 @@ public:
 	 * Print the maximum path in this tree
 	 * TODO: Implement printMaxPath
 	 */
-	void printMaxPath() {
-		std::cout << "TODO: Implement printMaxPath" << std::endl;
+	void printMaxPath() const {
+		size_t maxPathLength = getLengthMaxPath(_root);
+		std::vector<const Node<T>*> result = getMaxPath(_root);
+		if(result.size() != maxPathLength) {
+			std::cout << "MAX PATH RESULT INVALID! ACTAUL =	" << maxPathLength << " RESULT = " << result.size() << "\n";
+			return;
+		}
+		for(int i = result.size() - 1; i > -1; --i) {
+			std::cout << result[i]->value << " ";
+		}
+		std::cout << "\n";
+
+
+		
+
 	}
 
 	bool deleteValue(T value) {
@@ -201,11 +275,11 @@ public:
 
 	/**
 	 * Find if the BST contains the value
-	 * TODO: Implement contains
 	 */
-	bool contains(T value) {
-	    std::cout << "TODO: Implement contains" << std::endl;
-		return std::numeric_limits<T>::min();
+	bool contains(T value) const {
+	    //std::cout << "TODO: Implement contains" << std::endl;
+		//return std::numeric_limits<T>::min();
+		return containsHelper(_root, value);
 	}
 };
 
