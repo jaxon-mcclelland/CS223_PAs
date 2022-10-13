@@ -1,5 +1,5 @@
 #pragma once
-#include "Node.h"
+#include "AVL_Node.h"
 #include <queue>
 
 template <class T>
@@ -13,11 +13,12 @@ class AVL_Tree {
         void printTree(bool printHeight = false) const;
         bool validate() const;
         int height() const;
+        bool contains(T data) const;
     private:
         AVL_Node<T>* root;
         // allowed imbalance of the tree
         static const int ALLOWED_IMBALANCE = 1;
-
+        static bool findItem(T data, const AVL_Node<T>* pRoot);
         static void insertNode(T data, AVL_Node<T>* &pRoot);
         static void deleteNode(T data, AVL_Node<T>* &pRoot);
         static void deleteSubTree(AVL_Tree<T>* pRoot);
@@ -45,6 +46,29 @@ AVL_Tree<T>::~AVL_Tree() {
 }
 
 template <class T>
+bool AVL_Tree<T>::contains(T data) const {
+    return findItem(data, this->root);
+}
+
+template <class T>
+bool findItem(T data, const AVL_Node<T>* pRoot) {
+    if(pRoot == nullptr) {
+        return false;
+    }
+    if(pRoot->data == data) {
+        return true;
+    }
+    if(pRoot->data < data) {
+        return findItem(data, pRoot->pLeft);
+    }
+    if(pRoot->data > data) {
+        return findItem(data, pRoot->pRight);
+    }
+}
+
+
+
+template <class T>
 void AVL_Tree<T>::insert(T data) {
     if(this->root == nullptr) {
         this->root = new AVL_Node<T>(data);
@@ -52,11 +76,11 @@ void AVL_Tree<T>::insert(T data) {
     }
     insertNode(data, root);
 }
+
 template <class T>
 void AVL_Tree<T>::remove(T data) {
     deleteNode(data, root);
 }
-
 
 template <class T>
 void AVL_Tree<T>::insertNode(T data, AVL_Node<T>* &pRoot) {    
