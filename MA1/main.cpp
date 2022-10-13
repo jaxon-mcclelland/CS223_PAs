@@ -4,7 +4,7 @@
 
 #include "testQueue.h"
 
-// main function
+// main functions
 
 
 /*
