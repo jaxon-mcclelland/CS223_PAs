@@ -7,8 +7,6 @@ set(CMAKE_BUILD_TYPE Debug)
 add_compile_options(-g -I src/)
 
 add_executable(AVL_Tree main.cpp
-    src/testCases.h
     src/AVL_Tree.h
     src/AVL_Node.h
-    src/testCases.cpp
 )

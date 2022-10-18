@@ -63,7 +63,5 @@ int main(void) {
     std::cout << "\n*** DESCENDING TREE UNIT TESTS ****\n\n";
     run_unit_tests(descending_tree);
  
-
-    std::cout << "\n*** BONUS TESTS ****\n\n";
     return 0;
 }
