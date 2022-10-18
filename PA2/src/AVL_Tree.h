@@ -9,7 +9,7 @@ class AVL_Tree {
         AVL_Tree();
         ~AVL_Tree();
         void insert(T data);
-        void remove(T data);
+        //void remove(T data);
         void printTree(bool printHeight = false) const;
         bool validate() const;
         int height() const;
@@ -20,8 +20,9 @@ class AVL_Tree {
         static const int ALLOWED_IMBALANCE = 1;
         static bool findItem(T data, const AVL_Node<T>* pRoot);
         static void insertNode(T data, AVL_Node<T>* &pRoot);
-        static void deleteNode(T data, AVL_Node<T>* &pRoot);
-        static void deleteSubTree(AVL_Tree<T>* pRoot);
+        //static void deleteNode(T data, AVL_Node<T>* &pRoot);
+        // making this a static method caused cmake to freak out - not sure why
+        void deleteSubTree(AVL_Node<T>* pRoot);
         static void rebalanceTree(AVL_Node<T>* &pRoot);
         static int getHeight(AVL_Node<T>* pNode);
         
@@ -31,18 +32,17 @@ class AVL_Tree {
         
         bool validateSubTree(const AVL_Node<T>* pRoot) const;
         
-
 };
 
 
 template <class T>
 AVL_Tree<T>::AVL_Tree() {
-    this->root == nullptr;
+    this->root = nullptr;
 }
 
 template <class T>
 AVL_Tree<T>::~AVL_Tree() {
-    deleteSubTree(root);
+    deleteSubTree(this->root);
 }
 
 template <class T>
@@ -51,19 +51,21 @@ bool AVL_Tree<T>::contains(T data) const {
 }
 
 template <class T>
-bool findItem(T data, const AVL_Node<T>* pRoot) {
+bool AVL_Tree<T>::findItem(T data, const AVL_Node<T>* pRoot) {
+    
     if(pRoot == nullptr) {
         return false;
     }
     if(pRoot->data == data) {
         return true;
     }
-    if(pRoot->data < data) {
+    if(pRoot->data > data) {
         return findItem(data, pRoot->pLeft);
     }
-    if(pRoot->data > data) {
+    if(pRoot->data < data) {
         return findItem(data, pRoot->pRight);
     }
+    return false;
 }
 
 
@@ -76,11 +78,12 @@ void AVL_Tree<T>::insert(T data) {
     }
     insertNode(data, root);
 }
-
+/*
 template <class T>
 void AVL_Tree<T>::remove(T data) {
     deleteNode(data, root);
 }
+*/
 
 template <class T>
 void AVL_Tree<T>::insertNode(T data, AVL_Node<T>* &pRoot) {    
@@ -88,22 +91,34 @@ void AVL_Tree<T>::insertNode(T data, AVL_Node<T>* &pRoot) {
     if(pRoot->data == data) {
         return;
     }
-
     if(data < pRoot->data) {
         if(pRoot->pLeft == nullptr) {
-            pRoot->pLeft = new AVL_Node<T>(data, pRoot->height + 1);
-            return;
+            pRoot->pLeft = new AVL_Node<T>(data, std::max(pRoot->height - 1, 0));
+        } else {
+            insertNode(data, pRoot->pLeft);
         }
-        insertNode(data, pRoot->pLeft);
     } else {
         if(pRoot->pRight == nullptr) {
-            pRoot->pRight = new AVL_Node<T>(data, pRoot->height + 1);
-            return;
+            pRoot->pRight = new AVL_Node<T>(data, std::max(pRoot->height - 1, 0));
+        } else {
+            insertNode(data, pRoot->pRight);
         }
-        insertNode(data, pRoot->pRight);
     }
     rebalanceTree(pRoot);
 }
+
+// deletes an entire subtree, does not rebalance since this is only used to delete the whole tree
+template <class T>
+void AVL_Tree<T>::deleteSubTree(AVL_Node<T>* pRoot) {
+    if(pRoot == nullptr) {
+        return;
+    }
+    deleteSubTree(pRoot->pLeft);
+    deleteSubTree(pRoot->pRight);
+    delete pRoot;
+
+}
+
 
 template <class T>
 void deleteNode(T data, AVL_Node<T>* &pRoot) {
@@ -124,18 +139,6 @@ void deleteNode(T data, AVL_Node<T>* &pRoot) {
     }
 }
 
-// deletes an entire subtree, does not rebalance since this is only used to delete the whole tree
-template <class T>
-void deleteSubTree(AVL_Node<T>* pRoot) {
-    if(pRoot == nullptr) {
-        return;
-    }
-    deleteSubTree(pRoot->pLeft);
-    deleteSubTree(pRoot->pRight);
-    delete pRoot;
-
-}
-
 // validates an AVL subtree from pRoot
 template <class T>
 void AVL_Tree<T>::rebalanceTree(AVL_Node<T>* &pRoot) {
@@ -153,15 +156,14 @@ void AVL_Tree<T>::rebalanceTree(AVL_Node<T>* &pRoot) {
             rotateLeft(pRoot);
         }
     }
-    // I'm not sure these cases are setup correcy
     else if(getHeight(pRoot->pRight) - getHeight(pRoot->pLeft) > ALLOWED_IMBALANCE) {
         if(getHeight(pRoot->pRight->pRight) >= getHeight(pRoot->pRight->pLeft)) {
             // case 4
-            rotateLeft(pRoot->pRight);
             rotateRight(pRoot);
         }
         else {
             // case 3
+            rotateLeft(pRoot->pRight);
             rotateRight(pRoot);
         }
     }
@@ -234,9 +236,8 @@ template <class T>
 bool AVL_Tree<T>::validateSubTree(const AVL_Node<T>* pRoot) const {
     if(pRoot == nullptr)
         return true;
-    if(getHeight(pRoot->pLeft) - getHeight(pRoot->pRight) > ALLOWED_IMBALANCE || !validateSubTree(pRoot->pLeft) || !validateSubTree(pRoot->pRight))
+    if(std::abs(getHeight(pRoot->pLeft) - getHeight(pRoot->pRight)) > ALLOWED_IMBALANCE || !validateSubTree(pRoot->pLeft) || !validateSubTree(pRoot->pRight))
         return false;
-    
     return true;
 }
 

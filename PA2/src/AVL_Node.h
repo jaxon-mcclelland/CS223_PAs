@@ -32,9 +32,7 @@ AVL_Node<T>::AVL_Node(T data, int height) {
     this->height = height;
 }
 template <class T>
-AVL_Node<T>::~AVL_Node() {
-    delete this->data;
-}
+AVL_Node<T>::~AVL_Node() {}
 
 template <class T>
 T AVL_Node<T>::getData() const {
