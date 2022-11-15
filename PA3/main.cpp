@@ -33,7 +33,7 @@ void testHash(Hash<int, int> *hash, std::ofstream &myfile)
     myfile << "Time difference = " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << "[ms]" << std::endl;
 
     begin = std::chrono::steady_clock::now();
-    assert((*hash)[10000] == 10000);
+    assert((*hash)[1000] == 1000);
     end = std::chrono::steady_clock::now();
     myfile << "Time difference = " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << "[ms]" << std::endl;
 
@@ -46,11 +46,11 @@ int main(int argc, char *argv[])
 {
     
     std::ofstream myfile;
-    myfile.open("output.txt");
+    myfile.open("../output.txt");
     ChainingHash<int, int> cHash(101);
-    ProbingHash<int, int> pHash(101);
+    //ProbingHash<int, int> pHash(101);
     testHash(&cHash, myfile);
-    testHash(&pHash, myfile);
+    //testHash(&pHash, myfile);
     myfile.close();
     
     return 0;

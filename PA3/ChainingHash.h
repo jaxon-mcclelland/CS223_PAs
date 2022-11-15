@@ -30,7 +30,8 @@ class ChainingHash : public Hash<K,V> {
 public:
     ChainingHash(int n = 11) {
         this->num_buckets = n;
-        this->table = vector<vector<pair<K,V>>>(n);
+        this->num_items = 0;
+        this->table = vector<vector<pair<K,V>>>(n, vector<pair<K,V>>(0));
     }
 
     ~ChainingHash() {
@@ -54,12 +55,25 @@ public:
     bool insert(const std::pair<K, V>& pair) {
         K key = pair.first;
         int bucket_idx = hash(key);
-        table[bucket_idx].push_back(pair);
-        ++this->num_items;
-        if(load_factor() >= 1) {
-
+        
+        for(auto itr:table[bucket_idx]) {
+            if(itr.first == key) {
+                return false;
+            }
         }
-        return true;
+        
+       
+        table[bucket_idx].push_back(pair);
+        for(auto itr:table[bucket_idx]) {
+            if(itr.first == key) {
+                ++this->num_items;
+                if(load_factor() >= 0.5) {
+                    rehash();
+                } 
+                return true;
+            }
+        }
+        return false;
     }
 
     void erase(const K& key) {
@@ -68,6 +82,7 @@ public:
         for(int i = 0; i < bucket.size(); ++i) {
             if(bucket[i].first == key) {
                 bucket.erase(bucket.begin() + i);
+                --this->num_items;
                 return;
             }
         }
@@ -75,7 +90,8 @@ public:
     }
 
     void clear() {
-        this->num_buckets = this->num_items = 0;
+        this->num_items = 0;
+        this->num_items = 0;
         table = vector<vector<pair<K,V>>>(0);
     }
 
@@ -84,22 +100,27 @@ public:
     }
     // why on earth is this public??
     float load_factor() {
-        return num_buckets == 0 ? 0.0 : num_items / num_buckets;
+        return this->num_buckets == 0 ? 0.0 : (float)num_items / num_buckets;
     }
     void rehash() {
-        vector<pair<K,V>> items(num_items);
-        for(int i = 0; i < num_buckets; ++i) {
-            for(int j = 0; j < table[i].size(); ++j) {
-                items.push_back(table[i][j]);
+        vector<pair<K,V>> items;
+        items.reserve(this->num_items);
+        
+        for(int i = 0; i < this->num_buckets; ++i) {
+            for(auto itr:table[i]) {
+                items.push_back(itr);
             }
         }
-        this->num_buckets = findNextPrime(this->num_buckets);
-        this->table = vector<vector<pair<K,V>>>(num_buckets);
-        for(int i = 0; i < this->num_buckets; ++i) {
+        
+        this->num_buckets = findNextPrime(this->num_items + 1);
+        this->table = vector<vector<pair<K,V>>>(this->num_buckets, vector<pair<K,V>>(0));
+
+        for(int i = 0; i < num_items; ++i) {
             insert(items[i]);
         }
-
+        
     
+
     }
 
 private:

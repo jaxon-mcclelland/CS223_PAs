@@ -21,13 +21,13 @@ template<typename K, typename V>
 class ProbingHash : public Hash<K,V> { // derived from Hash
 private:
     vector<pair<pair<K,V>, EntryState>> table;
-    int size = 0;
+    int size_table = 0;
     int items = 0;
 
 public:
     ProbingHash(int n = 11) {
-        this->size = n;
-        table = vector<pair<pair<K,V>, EntryState>>(this->size);
+        this->size_table = n;
+        table = vector<pair<pair<K,V>, EntryState>>(this->size_table);
     }
 
     ~ProbingHash() {
@@ -35,7 +35,7 @@ public:
     }
 
     int size() {
-        return this->size;
+        return this->size_table;
     }
 
     V operator[](const K& key) {
@@ -44,6 +44,7 @@ public:
             if(table[bucket_idx].first.first == key) {
                 return table[bucket_idx].first.second;
             }
+            ++bucket_idx;
         }
         return {};
     }
@@ -51,26 +52,26 @@ public:
     bool insert(const std::pair<K, V>& pair) {
         K key = pair.first;
         int bucket_idx = hash(key);
-        while(bucket_idx < this->size && table[bucket_idx].second != EMPTY) {
+        while(bucket_idx < this->size_table && table[bucket_idx].second != EMPTY) {
             if(table[bucket_idx].first.first == pair.first) {
                 return false;
             }
+            ++bucket_idx;
         }
-        if(bucket_idx >= this->size) {
+        if(bucket_idx >= this->size_table) {
             return false;
         }
         std::pair<K,V> input_pair = pair;
-        table[bucket_idx] = std::make_pair<std::pair<K,V>, EntryState>(input_pair, VALID);
+        table[bucket_idx] = std::make_pair<std::pair<K,V>, EntryState>(std::move(input_pair), VALID);
         return true;
-
 
     }
 
     void erase(const K& key) {
         int bucket_idx = hash(key);
-        while(bucket_idx < this->size && table[bucket_idx].second != EMPTY) {
+        while(bucket_idx < this->size_table && table[bucket_idx].second != EMPTY) {
             if(table[bucket_idx].first.first == key) {
-                table[bucket_idx] = std::make_pair<pair<K,V>, EntryState>(table[bucket_idx].first, DELETED);
+                table[bucket_idx] = std::make_pair<pair<K,V>, EntryState>(std::move(table[bucket_idx].first), EMPTY);
                 return;
             }
             ++bucket_idx;
@@ -78,7 +79,7 @@ public:
     }
 
     void clear() {
-        this->size = 0;
+        this->size_table = 0;
         this->table = vector<pair<pair<K,V>, EntryState>>(0);
     }
 
@@ -87,7 +88,7 @@ public:
     }
 
     float load_factor() {
-        return this->size == 0 ? 0 : this->items / this->size;
+        return this->size_table == 0 ? 0 : this->items / this->size_table;
     }
 
 private:
@@ -114,7 +115,7 @@ private:
     }
 
     int hash(const K& key) {
-        return key % size;       
+        return key % size_table;       
     }
     
 };
