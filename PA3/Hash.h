@@ -9,6 +9,7 @@
 
 #ifndef __Hash_H
 #define __Hash_H
+#define LOAD_FACTOR 0.5
 
 #include <math.h>
 

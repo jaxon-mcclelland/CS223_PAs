@@ -67,7 +67,7 @@ public:
         for(auto itr:table[bucket_idx]) {
             if(itr.first == key) {
                 ++this->num_items;
-                if(load_factor() >= 0.5) {
+                if(load_factor() >= LOAD_FACTOR) {
                     rehash();
                 } 
                 return true;
@@ -86,13 +86,12 @@ public:
                 return;
             }
         }
-        // TODO: erase failed
     }
 
     void clear() {
         this->num_items = 0;
         this->num_items = 0;
-        table = vector<vector<pair<K,V>>>(0);
+        this->table.clear();
     }
 
     int bucket_count() {
@@ -112,9 +111,9 @@ public:
             }
         }
         
-        this->num_buckets = findNextPrime(this->num_items + 1);
-        this->table = vector<vector<pair<K,V>>>(this->num_buckets, vector<pair<K,V>>(0));
-
+        this->num_buckets = findNextPrime(this->num_buckets << 1);
+        this->table.resize(this->num_buckets);
+        //this->table = vector<vector<pair<K,V>>>(this->num_buckets, vector<pair<K,V>>(0));
         for(int i = 0; i < num_items; ++i) {
             insert(items[i]);
         }

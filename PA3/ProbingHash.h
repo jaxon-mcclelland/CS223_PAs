@@ -21,13 +21,13 @@ template<typename K, typename V>
 class ProbingHash : public Hash<K,V> { // derived from Hash
 private:
     vector<pair<pair<K,V>, EntryState>> table;
-    int size_table = 0;
-    int items = 0;
+    int table_capacity = 0;
+    int num_items = 0;
 
 public:
     ProbingHash(int n = 11) {
-        this->size_table = n;
-        table = vector<pair<pair<K,V>, EntryState>>(this->size_table);
+        this->table_capacity = n;
+        table = vector<pair<pair<K,V>, EntryState>>(this->table_capacity, {{-1, -1}, EMPTY});
     }
 
     ~ProbingHash() {
@@ -35,60 +35,62 @@ public:
     }
 
     int size() {
-        return this->size_table;
+        return this->num_items;
     }
 
     V operator[](const K& key) {
         int bucket_idx = hash(key);
-        while(table[bucket_idx].second != EMPTY) {
-            if(table[bucket_idx].first.first == key) {
-                return table[bucket_idx].first.second;
-            }
+        while(bucket_idx < this->table_capacity && table[bucket_idx].second != EMPTY && table[bucket_idx].second != DELETED && table[bucket_idx].first.first != key) {
             ++bucket_idx;
         }
-        return {};
+        if(bucket_idx > this->table_capacity || table[bucket_idx].second == EMPTY || table[bucket_idx].second == DELETED) {
+            return {};
+        }
+        return table[bucket_idx].first.second;
+
     }
 
     bool insert(const std::pair<K, V>& pair) {
         K key = pair.first;
         int bucket_idx = hash(key);
-        while(bucket_idx < this->size_table && table[bucket_idx].second != EMPTY) {
-            if(table[bucket_idx].first.first == pair.first) {
-                return false;
-            }
+        while(bucket_idx < this->table_capacity && (table[bucket_idx].second != EMPTY && table[bucket_idx].second != DELETED)) {
             ++bucket_idx;
         }
-        if(bucket_idx >= this->size_table) {
+        if(bucket_idx >= this->table_capacity || table[bucket_idx].first.first == pair.first) {
             return false;
         }
-        std::pair<K,V> input_pair = pair;
-        table[bucket_idx] = std::make_pair<std::pair<K,V>, EntryState>(std::move(input_pair), VALID);
+        std::pair<std::pair<K,V>, EntryState> element = {pair, VALID};
+        table[bucket_idx] = element;
+        ++num_items;
+        if(load_factor() >= LOAD_FACTOR) {
+            rehash();
+        }
         return true;
-
     }
 
     void erase(const K& key) {
         int bucket_idx = hash(key);
-        while(bucket_idx < this->size_table && table[bucket_idx].second != EMPTY) {
-            if(table[bucket_idx].first.first == key) {
-                table[bucket_idx] = std::make_pair<pair<K,V>, EntryState>(std::move(table[bucket_idx].first), EMPTY);
-                return;
-            }
+        while(bucket_idx < this->table_capacity && table[bucket_idx].second != EMPTY && table[bucket_idx].second != DELETED && table[bucket_idx].first.first != key) {
             ++bucket_idx;
         }
+        if(bucket_idx > this->table_capacity || table[bucket_idx].second == EMPTY || table[bucket_idx].second == DELETED) {
+            return;
+        }
+        table[bucket_idx].second = DELETED;
+        --num_items;
     }
 
     void clear() {
-        this->size_table = 0;
-        this->table = vector<pair<pair<K,V>, EntryState>>(0);
+        this->table_capacity = 0;
+        this->table.clear();
     }
 
     int bucket_count() {
-        return this->items;
+        return this->table_capacity;
     }
 
     float load_factor() {
-        return this->size_table == 0 ? 0 : this->items / this->size_table;
+        return this->table_capacity == 0 ? 0.0 : (float)this->num_items / this->table_capacity;
     }
 
 private:
@@ -113,9 +115,31 @@ private:
 
         return true;
     }
+    void rehash() {
+        vector<std::pair<K,V>> items;
+        items.reserve(num_items);
+        for(auto itr:table) {
+            if(itr.second == VALID) {
+                items.push_back(itr.first);
+            }
+        }
+        
+        if(items.size() != num_items) {
+            // problem
+            return;
+        }
+        this->table_capacity = findNextPrime(this->table_capacity << 1);
+        this->table.clear();
+        this->num_items = 0;
+        this->table.resize(this->table_capacity, {{-1,-1}, EMPTY});
+        for(auto itr:items) {
+            insert(itr);
+        }
+        return;
+    }
 
     int hash(const K& key) {
-        return key % size_table;       
+        return key % table_capacity;       
     }
     
 };
