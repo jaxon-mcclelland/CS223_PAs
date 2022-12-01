@@ -32,6 +32,6 @@ void runHeap() {
 }
 int main(int argc, char* argv[])
 {
-    runOpenMP();
+    //runOpenMP();
     runHeap();
 }

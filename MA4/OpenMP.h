@@ -8,6 +8,7 @@
 #include <cassert>
 #include <algorithm>
 #include <vector>
+#include <bits/stdc++.h> // for int_min
 
 void hello_world() {
     printf("\nStart hello_world()\n");
@@ -74,11 +75,38 @@ void cal_max() {
     for (int i = 0; i < data_size; ++i) {
         data[i] = rand() % data_size;
     }
+
+    omp_set_num_threads(num_threads);
+    omp_lock_t global_max_write_lock;
+    omp_init_lock(&global_max_write_lock);
+
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
     // OpenMP implementation: start your code here
     // You need to follow the example given in cal_sum() and store the max value in the "max" variable created above.
     // The max found by your OpenMap should be identical to the max found by stl
     
+    
+
+    #pragma omp parallel
+        {
+            int tid = omp_get_thread_num();
+            int local_max = INT_MIN;
+            int start = workload * tid;
+            int end = workload * (tid + 1);
+            for(int i = start; i < end; ++i) {
+                if(data[i] > local_max) {
+                    local_max = data[i];
+                }
+            }
+            omp_set_lock(&global_max_write_lock);
+            if(local_max > max) {
+                max = local_max;
+            }
+            omp_unset_lock(&global_max_write_lock);
+
+
+        }  
+    omp_destroy_lock(&global_max_write_lock);
     // your code goes here
 
     // OpenMP implementation: stop here

@@ -12,6 +12,7 @@
 #include <math.h>         // pow()
 #include <string>
 #include <limits>
+#include <bits/stdc++.h>
 
 /**
  *  Declaring Heap class
@@ -21,6 +22,7 @@ class Heap
 {
 
 private:
+	long unsigned int num_items;
 	std::vector<T> _items;    // Main vector of elements for heap storage. The first item in the array is a placeholder.
 
 /*********************************************************************/
@@ -34,7 +36,21 @@ private:
 	 */
 	void percolateDown(unsigned int hole)
 	{
-		// your code goes here
+		unsigned int parent = hole;
+		unsigned int child = hole << 1;
+		while(child < num_items) {
+			if(_items[child] > _items[child + 1]) {
+				++child;
+			}
+			if(_items[parent] <= _items[child]) {
+				break;
+			}
+			T temp = _items[parent];
+			_items[parent] = _items[child];
+			_items[child] = temp;
+			parent = child;
+			child = child << 1;
+		}
     }
 
 
@@ -45,7 +61,24 @@ private:
 	 */
 	void percolateUp(T item)
 	{
-    	// your code goes here
+    	_items[++num_items] = item;
+
+		long unsigned int idx = num_items;
+		long unsigned int parent = idx >> 1;
+		while(parent != 0) {
+			if(_items[idx] < _items[parent]) {
+				T temp = _items[idx];
+				_items[idx] = _items[parent];
+				_items[parent] = temp;
+				idx = parent;
+				parent = parent >> 1;
+			} else {
+				break;
+			}
+		}
+		if(num_items == _items.size() - 1) {
+			_items.resize(_items.size() << 1);
+		}
 	}
 
 /********************** End Microassigment zone *********************/
@@ -55,7 +88,10 @@ public:
 	 *  Default empty constructor
 	 */
 	Heap() {
-        _items.push_back(std::numeric_limits<T>::min()); // Push a placeholder for the first item in the array
+		// items[0] = -infinity
+		_items = std::vector<T>(15);
+		_items[0] = INT_MIN;
+		this->num_items = 0;
 	}
 
 
@@ -72,19 +108,16 @@ public:
 	 */
 	T pop()
 	{
-		long unsigned int last_index = _items.size() - 1;	// Calc last item index
-		int root_index = 1;                      // Root index (for readability)
 
-		if( size() == 0 ) {
+		if( this->num_items == 0 ) {
 			throw std::out_of_range("pop() - No elements in heap");
 		}
 
-		T minItem = _items[root_index];
+		T minItem = _items[1];
 
-		_items[root_index] = _items[last_index]; // Move last item to root
-		_items.pop_back();          // Erase last element entry
+		_items[1] = _items[--num_items]; // Move last item to root
 
-		if( size() > 0 ) {			// Only runs if the heap isn't empty now
+		if( num_items > 0 ) {			// Only runs if the heap isn't empty now
 			percolateDown(1);       // Fix heap property
 		}
         return minItem;
@@ -97,13 +130,8 @@ public:
 	 */
 	bool empty() const
 	{
-		if( _items.size() == 1 ) {
-			return true;
-		} else {
-			return false;
-		}
+		return this->num_items == 0 ? false : true;
 	}
-
 
 	/**
 	 *  Returns current quantity of elements in heap (N)
@@ -111,7 +139,7 @@ public:
 	 */
 	long unsigned int size() const
 	{
-		return _items.size() - 1;
+		return this->num_items;
 	}
 
 
