@@ -38,7 +38,7 @@ private:
 	{
 		unsigned int parent = hole;
 		unsigned int child = hole << 1;
-		while(child < num_items) {
+		while(child <= num_items) {
 			if(_items[child] > _items[child + 1]) {
 				++child;
 			}
@@ -61,20 +61,15 @@ private:
 	 */
 	void percolateUp(T item)
 	{
-    	_items[++num_items] = item;
-
+		_items[++num_items] = item;
 		long unsigned int idx = num_items;
 		long unsigned int parent = idx >> 1;
-		while(parent != 0) {
-			if(_items[idx] < _items[parent]) {
-				T temp = _items[idx];
-				_items[idx] = _items[parent];
-				_items[parent] = temp;
-				idx = parent;
-				parent = parent >> 1;
-			} else {
-				break;
-			}
+		while(parent != 0 && _items[idx] < _items[parent]) {
+			T temp = _items[idx];
+			_items[idx] = _items[parent];
+			_items[parent] = temp;
+			idx = parent;
+			parent = parent >> 1;
 		}
 		if(num_items == _items.size() - 1) {
 			_items.resize(_items.size() << 1);
@@ -115,7 +110,7 @@ public:
 
 		T minItem = _items[1];
 
-		_items[1] = _items[--num_items]; // Move last item to root
+		_items[1] = _items[num_items--]; // Move last item to root
 
 		if( num_items > 0 ) {			// Only runs if the heap isn't empty now
 			percolateDown(1);       // Fix heap property

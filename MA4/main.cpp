@@ -29,9 +29,10 @@ void runHeap() {
         assert(vect[i] == hp->pop());
     }
     printf("\nStart runHeap(): assert pass!\n");
+    delete hp;
 }
 int main(int argc, char* argv[])
 {
-    //runOpenMP();
+    runOpenMP();
     runHeap();
 }
